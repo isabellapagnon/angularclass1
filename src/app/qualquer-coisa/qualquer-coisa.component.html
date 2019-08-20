@@ -1,0 +1,35 @@
+
+<br>
+<div class="col-sm-12">
+		<div class="p-r-3"><button (click)="getAJoke()" class="btn btn-primary btn-sm col-sm-3">Get a random Chuck Norris Joke</button>
+			<th>Random Joke:</th>
+					{{joke}}
+		</div><br>
+		<div class="p-r-3"><button (click)="likeJoke()" class="btn btn-success btn-sm col-sm-3">Like this one</button>
+			<th>List of Liked Jokes:</th>
+				<div *ngFor= "let gj of goodJokes">
+    			{{gj}}
+</div>
+		</div><br>
+		<div class="p-r-3"><button (click)="getAllCategories()" class="btn btn-danger btn-sm col-sm-3" >List of Categories</button>
+			<div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Available Categories:</th>
+								<th>Actions:</th>
+								<th>Category Joke: </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor= "let ct of categories">
+								<td>{{ct}}</td>
+								<td><button (click)="getACategoryJoke(ct)" class="btn btn-success btn-sm">Generate</button>
+								</td>
+								<td>{{categoryJoke}}</td>
+							</tr> 
+						</tbody>
+					</table>
+				</div>
+		</div>
+</div>
