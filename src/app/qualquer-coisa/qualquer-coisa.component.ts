@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QualquerCoisaService } from './qualquer-coisa.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-qualquer-coisa',
@@ -9,22 +10,24 @@ import { QualquerCoisaService } from './qualquer-coisa.service';
 export class QualquerCoisaComponent implements OnInit {
 
   joke: string = '';
-  categoryJoke: string = '';
+  //categoryJoke: string = '';
   goodJokes: any = [];
   categories: any = [];
-  constructor(private qqrCoisa: QualquerCoisaService) { }
+  selectedCategory: any;
+  constructor(private qqrCoisa: QualquerCoisaService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-     
+    this.spinner.show();
+    this.getAllCategories();
   }
 
-  likeJoke(){
-    this.goodJokes.push(this.joke);  
+  likeJoke() {
+    this.goodJokes.push(this.joke);
   }
 
-  getAJoke(){
+  getAJoke() {
     this.qqrCoisa.getJokes().subscribe(
-      res=> {
+      res => {
         this.joke = res['value'];
       }
     );
@@ -32,17 +35,30 @@ export class QualquerCoisaComponent implements OnInit {
 
   getAllCategories() {
     this.qqrCoisa.getCategories().subscribe(
-      res=> {
+      res => {
         this.categories = res;
+        this.spinner.hide();
       }
     );
   }
 
-  getACategoryJoke(aux) {
-    this.qqrCoisa.getJokeByCategory(aux).subscribe(
-      res=> {
-        this.categoryJoke = res['value'];
+  getCategoryJoke() {
+    this.qqrCoisa.getJokeByCategory(this.selectedCategory).subscribe(
+      res => {
+        this.joke = res['value'];
       }
-    );
+    )
   }
+
+  removeJoke(index){
+    this.goodJokes.splice(index, 1);
+  }
+
+  /* getACategoryJoke(aux) {
+     this.qqrCoisa.getJokeByCategory(aux).subscribe(
+       res=> {
+         this.categoryJoke = res['value'];
+       }
+     );
+   }*/
 }

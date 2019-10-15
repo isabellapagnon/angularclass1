@@ -8,6 +8,7 @@ export class QualquerCoisaService {
 
   apiEndpoint = 'https://api.chucknorris.io/jokes/random';
   apiEndpointCategories = 'https://api.chucknorris.io/jokes/categories';
+  byCategoryEndpoint = 'https://api.chucknorris.io/jokes/random?category=';
   constructor(private http: HttpClient) { }
 
   getCategories() {
@@ -17,7 +18,7 @@ export class QualquerCoisaService {
     return this.http.get(this.apiEndpoint);
   }
 
-  getJokeByCategory(aux){
-    return this.http.get('https://api.chucknorris.io/jokes/random?category=' + aux);
+  getJokeByCategory(category){
+    return this.http.get(`${this.byCategoryEndpoint}${category}`);
   }
 }
